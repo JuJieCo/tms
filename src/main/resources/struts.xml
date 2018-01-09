@@ -1,0 +1,107 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<include file="struts-default.xml" />
+	<constant name="struts.objectFactory" value="spring" />
+	<package name="default"  namespace="/"  extends="json-default , jfreechart-default">
+		 
+	<interceptors>
+		 <!-- 配置自定义的拦截器 -->
+		<interceptor name="authority" class="com.jujie.tms.model.utils.AuthorityInterceptor" />
+		<interceptor name="encode" class="com.jujie.tms.model.utils.EncodeInterceptor" />
+	   <!--  拦截器栈  -->
+		<interceptor-stack name="mydefault">
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="token">
+				<param name="excludeMethods">login,logout,exportExcel,query*,find*,modify*,delete*,show*</param>
+			</interceptor-ref>
+			<interceptor-ref name="authority"/>  
+			<interceptor-ref name="encode"/>
+		</interceptor-stack>
+	</interceptors> 
+	<default-interceptor-ref name="mydefault" />
+		   
+	<!--定义全局Result-->
+	<global-results>
+		<result name="login">/page/admin/login/login_proxy.jsp</result>
+		<result name="invalid.token">/page/error-500.jsp</result>
+	</global-results>
+	
+		
+		
+		<action name="loginAction" class="com.jujie.tms.struts.action.LoginAction">
+			<result name="loginUser">/page/kaidan/list.jsp</result>
+		</action>
+
+		<action name="tuoyundanAction" class="com.jujie.tms.struts.action.TuoyundanAction">
+			<result name="show">/page/kaidan/show.jsp</result>
+			<result name="modify">/page/kaidan/add.jsp</result>
+			<result name="list">/page/kaidan/list.jsp</result>
+			
+			<result name="yundan">/page/tongji/yundan.jsp</result>
+		</action>
+		
+		<action name="kehuAction" class="com.jujie.tms.struts.action.KehuAction">
+			<result name="show">/page/kehu/show.jsp</result>
+			<result name="modify">/page/kehu/add.jsp</result>
+			<result name="list">/page/kehu/list.jsp</result>
+		</action>
+		
+		<action name="xianluAction" class="com.jujie.tms.struts.action.XianluAction">
+			<result name="show">/page/xianlu/show.jsp</result>
+			<result name="modify">/page/xianlu/add.jsp</result>
+			<result name="list">/page/xianlu/list.jsp</result>
+		</action>
+		
+		<action name="employeesAction" class="com.jujie.tms.struts.action.EmployeesAction">
+			<result name="show">/page/employees/show.jsp</result>
+			<result name="modify">/page/employees/add.jsp</result>
+			<result name="list">/page/employees/list.jsp</result>
+		</action>
+		
+		<action name="wangdianAction" class="com.jujie.tms.struts.action.WangdianAction">
+			<result name="show">/page/wangdian/show.jsp</result>
+			<result name="modify">/page/wangdian/add.jsp</result>
+			<result name="list">/page/wangdian/list.jsp</result>
+		</action>
+		
+		<action name="kehuAutoAction" class="com.jujie.tms.struts.action.KehuAutoAction">
+			<result type="json"></result>
+		</action>
+		
+		<action name="jfreechart" class="com.jujie.tms.struts.action.JfreeCharAction">
+			<result name="success" type="chart">
+				<param name="width">600</param>
+				<param name="height">400</param>
+			</result>
+		</action>
+		
+		
+  
+        <!--测试Excel下载-->  
+        <action name="exportExcel" class="com.jujie.tms.struts.action.ExcelExportAction">  
+            <result name="success" type="stream">  
+                <!-- 下载文件的类型，如果你不知道是什么格式，可以去 tomcat\conf\web.xml下找 -->  
+                <param name="contentType">application/vnd.ms-excel</param>  
+                <!-- 返回流 excelStream为action中的流变量名称 -->  
+                <param name="inputName">excelStream</param>  
+                <!-- attachment 这个位置的参数挺特殊的，可以设置成下载时，是否出现个下载提示框，或者直接下载之类的。  
+                fileName指定生成的文件名字(适合动态生成文件名，比如做报表时，一般都要说是几月的统计数据之类)为action中变量-->  
+                <param name="contentDisposition">  
+                    attachment;filename=${excelFileName}  
+                </param>  
+                <param name="bufferSize">1024</param>  
+            </result>  
+        </action>  
+		
+		
+	</package>
+	
+	
+	
+		
+
+	
+</struts>
+

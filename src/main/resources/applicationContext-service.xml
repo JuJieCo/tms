@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans    
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd    
+    http://www.springframework.org/schema/context   
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd    
+    http://www.springframework.org/schema/aop    
+    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+    http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	
+	<bean id="tuoyundanService" class="com.jujie.tms.model.service.TuoyundanService">
+		<property name="tuoyundanDAOSer" ref="tuoyundanDAO"></property>
+		<property name="kehuDAOSer" ref="kehuDAO"></property>
+	</bean>
+	
+	<bean id="kehuService" class="com.jujie.tms.model.service.KehuService">
+		<property name="kehuDAOSer" ref="kehuDAO"></property>
+	</bean>
+	
+	<bean id="xianluService" class="com.jujie.tms.model.service.XianluService">
+		<property name="xianLuDAOSer" ref="xianluDAO"></property>
+	</bean>
+	
+	<bean id="employeesService" class="com.jujie.tms.model.service.EmployeesService">
+		<property name="employeesDAOSer" ref="employeesDAO"></property>
+	</bean>
+	
+	<bean id="wangdianService" class="com.jujie.tms.model.service.WangdianService">
+		<property name="wangdianDAOSer" ref="wangdianDAO"></property>
+	</bean>
+	  
+</beans>
